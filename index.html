@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="游哲睿的個人網站 - Cyberpunk Edition" />
+    <meta name="author" content="游哲睿" />
+    <title>游哲睿 JERRY YU | PORTFOLIO</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+    <!-- Font Awesome -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* --- 全域變數定義 (Color Palette) --- */
+        :root {
+            --bg-color: #0b0c15; /* 深空黑 */
+            --card-bg: rgba(20, 25, 40, 0.7); /* 半透明深藍 */
+            --primary-color: #00f3ff; /* 賽博青 */
+            --secondary-color: #ff0055; /* 霓虹紅 */
+            --text-main: #e0e6ed;
+            --text-muted: #94a3b8;
+            --border-color: rgba(0, 243, 255, 0.3);
+            --font-main: 'Noto Sans TC', sans-serif;
+            --font-tech: 'Orbitron', sans-serif;
+            --font-mono: 'Share Tech Mono', monospace;
+            --nav-height: 80px; /* 定義導航欄高度變數 */
+        }
+
+        /* --- 基礎設定 --- */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            position: relative;
+            padding-top: var(--nav-height); /* 增加頂部內距，防止內容被遮擋 */
+        }
+
+        /* 背景網格特效 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(11, 12, 21, 0.9), rgba(11, 12, 21, 0.95)),
+                repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0, 243, 255, 0.03) 1px, rgba(0, 243, 255, 0.03) 2px),
+                repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0, 243, 255, 0.03) 1px, rgba(0, 243, 255, 0.03) 2px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 滾動條美化 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        h1, h2 {
+            font-family: var(--font-tech);
+            text-transform: uppercase;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        /* --- 導航欄 (HUD 風格) --- */
+        #sideNav {
+            background: rgba(11, 12, 21, 0.95) !important;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 243, 255, 0.1);
+            /* 修正排版問題：移除自定義的 display: flex，使用 Bootstrap 原生排版 */
+            /* display: flex; */
+            /* align-items: center; */ 
+            padding-top: 0;
+            padding-bottom: 0;
+            height: var(--nav-height);
+        }
+
+        /* 讓 Container 在桌面版撐滿高度，確保 Logo 和選單能垂直置中 */
+        #sideNav .container-fluid {
+            height: 100%;
+        }
+        
+        /* 手機版選單打開時的高度自動 */
+        @media (max-width: 991.98px) {
+            #sideNav {
+                height: auto;
+                min-height: var(--nav-height);
+                padding: 10px 0;
+                /* align-items: flex-start; 移除 */
+            }
+
+            #sideNav .container-fluid {
+                height: auto; /* 手機版不需要固定高度 */
+            }
+            
+            .navbar-collapse {
+                background: rgba(11, 12, 21, 0.98);
+                margin-top: 10px;
+                border-radius: 5px;
+                padding: 10px;
+                border: 1px solid rgba(0, 243, 255, 0.1);
+            }
+        }
+
+        .navbar-brand {
+            font-family: var(--font-tech);
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            text-shadow: 0 0 5px var(--primary-color);
+            height: 100%; /* 修正：跟隨 container 高度 */
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 手機版 Logo 高度調整 */
+        @media (max-width: 991.98px) {
+            .navbar-brand {
+                height: 50px; /* 手機版 logo 區域高度較小 */
+            }
+        }
+
+        .navbar-nav .nav-link {
+            font-family: var(--font-main);
+            color: var(--text-muted) !important;
+            font-weight: 500;
+            letter-spacing: 2px;
+            position: relative;
+            padding: 10px 15px;
+        }
+
+        /* 修改：移除 .active 狀態的顏色變化，只保留 hover */
+        .navbar-nav .nav-link:hover {
+            color: #fff !important;
+        }
+
+        .navbar-nav .nav-link::before {
+            content: '[';
+            margin-right: 5px;
+            color: var(--secondary-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .navbar-nav .nav-link::after {
+            content: ']';
+            margin-left: 5px;
+            color: var(--secondary-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        /* 修改：移除 .active 狀態的括號顯示，只保留 hover */
+        .navbar-nav .nav-link:hover::before, .navbar-nav .nav-link:hover::after {
+            opacity: 1;
+        }
+
+        .img-profile-nav {
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
+            transition: transform 0.5s;
+        }
+        
+        .img-profile-nav:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        /* --- 區塊通用設定 --- */
+        section {
+            padding: 50px 0; /* 調整內距 */
+            min-height: 100vh; /* 強制全螢幕高度 */
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            /* 修正導航列定位問題：加上上方邊距，避免內容被遮擋 */
+            scroll-margin-top: var(--nav-height); 
+        }
+
+        /* 裝飾性日文/科技文字 */
+        section::after {
+            content: attr(data-deco);
+            position: absolute;
+            right: 5%;
+            bottom: 5%;
+            font-family: var(--font-tech);
+            font-size: 5rem;
+            color: rgba(255, 255, 255, 0.03);
+            font-weight: 900;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        /* --- 關於我 (About) --- */
+        .hero-name {
+            font-size: 5rem; /* 放大標題 */
+            line-height: 1;
+            margin-bottom: 1rem;
+            text-shadow: 4px 4px 0px var(--secondary-color);
+        }
+
+        .text-english {
+            display: block;
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-family: var(--font-tech);
+            letter-spacing: 5px;
+            margin-top: 15px;
+        }
+
+        .bio-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            border-radius: 5px;
+            position: relative;
+            /* 切角效果 */
+            clip-path: polygon(
+                20px 0, 100% 0, 
+                100% calc(100% - 20px), calc(100% - 20px) 100%, 
+                0 100%, 0 20px
+            );
+            max-width: 800px; /* 限制文字卡片寬度 */
+        }
+
+        .bio-card::before {
+            content: "STATUS: NORMAL";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: #00ff00;
+        }
+
+        /* 大頭照樣式 */
+        .main-profile-img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            border: 3px solid var(--primary-color);
+            box-shadow: 10px 10px 0px var(--secondary-color);
+            filter: grayscale(20%);
+            transition: all 0.5s ease;
+        }
+
+        .main-profile-img:hover {
+            filter: grayscale(0%);
+            transform: translate(-5px, -5px);
+            box-shadow: 15px 15px 0px var(--secondary-color);
+        }
+
+        .jerryh1 {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* --- 經歷卡片 (Cards) --- */
+        .tech-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border-left: 3px solid var(--primary-color);
+            padding: 2rem; /* 增加內距 */
+            margin-bottom: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-card:hover {
+            transform: translateX(10px);
+            box-shadow: -5px 5px 20px rgba(0, 243, 255, 0.1);
+            background: rgba(0, 243, 255, 0.05);
+        }
+
+        .tech-card h3 {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-card .subheading {
+            font-family: var(--font-mono);
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .text-date {
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            font-size: 1rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+        
+        .schoolp {
+            font-size: 1.1rem; /* 放大文字 */
+            line-height: 1.8;
+            color: #d1d5db;
+        }
+
+        /* --- 技能 (Skills) --- */
+        .skill-item {
+            background: rgba(255,255,255,0.05);
+            margin-bottom: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-radius: 4px;
+            border: 1px solid transparent;
+        }
+
+        .skill-item:hover {
+            border-color: var(--primary-color);
+        }
+
+        .skill-num {
+            font-family: var(--font-tech);
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-right: 25px;
+            width: 50px;
+        }
+
+        .skill-name {
+            font-weight: 700;
+            font-size: 1.4rem;
+            flex-grow: 1;
+        }
+        
+        .skill-tag {
+            background: var(--primary-color);
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 2px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* --- 歌曲 (Gallery) --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* 手機預設一欄 */
+            gap: 30px;
+        }
+
+        /* 電腦版 (lg以上) 設定為三個一排 */
+        @media (min-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .jerrycrop {
+            width: 100%;
+            aspect-ratio: 1/1; /* 改回正方形 */
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+        }
+
+        .jerrycrop:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        /* --- 聯絡 (Contact) --- */
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 4.5rem; /* 放大圖示 */
+            width: 4.5rem;
+            background-color: rgba(255,255,255,0.05);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 2rem;
+            margin-right: 2rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--primary-color);
+            color: #000;
+            box-shadow: 0 0 20px var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 991.98px) {
+            section {
+                padding: 40px 0;
+                min-height: auto; /* 手機版不強制全屏高度，避免太長 */
+            }
+            .hero-name {
+                font-size: 3rem;
+            }
+            #sideNav {
+                text-align: center;
+            }
+            .navbar-brand span {
+                display: block; 
+            }
+            .img-profile-nav {
+                max-width: 80px;
+            }
+            /* 手機版隱藏右側大圖，改用上方小圖 */
+            .desktop-only-img {
+                display: none;
+            }
+        }
+        
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeOut 1s ease-out 1.5s forwards;
+            pointer-events: none;
+        }
+        
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+        
+        .glitch-text {
+            color: white;
+            font-family: var(--font-tech);
+            font-size: 2rem;
+            animation: pulse 1s infinite alternate;
+        }
+
+    </style>
+</head>
+<body id="page-top" data-bs-spy="scroll" data-bs-target="#sideNav" data-bs-offset="100">
+
+    <!-- Loading Screen -->
+    <div class="loader">
+        <div class="glitch-text">SYSTEM LOADING...</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="sideNav">
+        <div class="container-fluid px-4 px-lg-5"> <!-- 寬版容器 -->
+            <a class="navbar-brand js-scroll-trigger d-flex align-items-center gap-3" href="#page-top">
+                <span class="d-none d-lg-block">
+                    <!-- 恢復太空人圖示 -->
+                    <i class="fa-solid fa-user-astronaut fa-2x" style="color: var(--primary-color);"></i>
+                </span>
+                <span class="ms-2">JERRY.YU <span style="font-size:0.7em; color:var(--text-muted)">// 游哲睿</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">關於 (ABOUT)</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#school">學歷 (EDU)</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#work">經歷 (EXP)</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">技能 (SKILL)</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#lovemusic">收藏 (FAV)</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">聯絡 (LINK)</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content (改為 container-fluid 並加寬版 padding) -->
+    <div class="container-fluid px-4 px-lg-5">
+
+        <!-- 關於我 -->
+        <section class="resume-section" id="about" data-deco="私">
+            <div class="resume-section-content w-100">
+                <div class="row align-items-center justify-content-between"> <!-- 左右對齊 -->
+                    <div class="col-lg-7">
+                        <h1 class="hero-name">
+                            游哲睿
+                            <span class="text-english">Jerry Yu</span>
+                        </h1>
+                        <div class="subheading mb-4" style="color: var(--primary-color); font-family: var(--font-mono); font-size: 1.2rem;">
+                            > 世新大學 資訊傳播學系 | SYSTEM_ID: A113070032
+                        </div>
+                        
+                        <div class="bio-card">
+                            <p class="lead mb-0" style="font-size: 1.2rem; line-height: 1.8;">
+                                我的名字叫<span class="jerryh1">游哲睿</span>，19歲。<br>
+                                住在新北市蘆洲區一帶，未婚。<br>
+                                晚上12點睡，每天要睡足8個小時。睡前，我一定喝一杯溫牛奶，然後做20分鐘的柔軟操，上了床，馬上熟睡。
+                            </p>
+                        </div>
+                        
+                        <div class="mt-5">
+                            <a class="btn btn-outline-light rounded-0 px-5 py-3" href="#contact" style="border-color: var(--primary-color); color: var(--primary-color); font-size: 1.1rem;">
+                                <i class="fa-solid fa-paper-plane me-2"></i> INTERFACE
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 電腦版右側大圖 (16:9 視覺平衡關鍵) -->
+                    <div class="col-lg-4 desktop-only-img text-center">
+                        <img src="assets/Jerry.jpg" alt="Jerry Yu Profile" class="main-profile-img" onerror="this.src='https://dummyimage.com/400x500/141928/00f3ff.png&text=JERRY'">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 學習經歷 -->
+        <section class="resume-section" id="school" data-deco="学">
+            <div class="resume-section-content w-100">
+                <h2 class="section-title">學習經歷 Education</h2>
+                
+                <div class="row">
+                    <div class="col-xl-10 col-lg-12"> <!-- 限制寬度不至於太散 -->
+                        <div class="tech-card">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3>世新大學 <small style="font-size:0.6em; color:var(--text-muted)">SHU</small></h3>
+                                <span class="text-date">2024.09 - PRESENT</span>
+                            </div>
+                            <div class="subheading mb-3">資訊傳播學系</div>
+                            <div class="schoolp">
+                                <p>世新資傳人－在網路時代能夠充分掌握數位內容與數位通路之資訊傳播專才。運用多元的傳播媒介，從事資訊蒐集、整理、檢索、加值。</p>
+                                <a href="https://ics.wp.shu.edu.tw/" target="_blank" class="text-decoration-none text-light"><i class="fa-solid fa-arrow-up-right-from-square text-primary"></i> 訪問系網</a>
+                            </div>
+                        </div>
+
+                        <div class="tech-card" style="border-left-color: var(--secondary-color);">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3>成淵高中 <small style="font-size:0.6em; color:var(--text-muted)">CYHS</small></h3>
+                                <span class="text-date">2021.09 - 2024.06</span>
+                            </div>
+                            <div class="subheading mb-3">普通班</div>
+                            <div class="schoolp">
+                                <p>積土成山，風雨興焉；積水成淵，蛟龍生焉。創立於1897年，擁有悠久歷史的完全中學。</p>
+                                <a href="https://www.cyhs.tp.edu.tw/nss/p/index" target="_blank" class="text-decoration-none text-light"><i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--secondary-color);"></i> 訪問校網</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 工作經歷 -->
+        <section class="resume-section" id="work" data-deco="職">
+            <div class="resume-section-content w-100">
+                <h2 class="section-title">工作經歷 Experience</h2>
+                
+                <!-- 修正：改用與學歷區塊一致的堆疊排版，避免並排看起來不同 -->
+                <div class="row">
+                    <div class="col-xl-10 col-lg-12"> 
+                        <div class="tech-card">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3>協泰蔘藥行</h3>
+                                <span class="badge bg-secondary rounded-0">PART-TIME</span>
+                            </div>
+                            <div class="subheading mb-3">內場工作人員</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled" style="font-family: var(--font-mono);">
+                                        <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> 包裝中藥材處理</li>
+                                        <li class="mb-2"><i class="fa-solid fa-scale-balanced text-success me-2"></i> 精密秤重作業</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled" style="font-family: var(--font-mono);">
+                                        <li class="mb-2"><i class="fa-solid fa-box-open text-success me-2"></i> 包裝袋熱封口</li>
+                                        <li class="mb-2"><i class="fa-solid fa-dolly text-success me-2"></i> 物流貨物搬運</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tech-card" style="border-left-color: var(--secondary-color);">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3>華程實業股份有限公司</h3>
+                                <span class="badge bg-secondary rounded-0">PART-TIME</span>
+                            </div>
+                            <div class="subheading mb-3">貨運人員</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled" style="font-family: var(--font-mono);">
+                                        <li class="mb-2"><i class="fa-solid fa-truck-ramp-box text-success me-2"></i> 物流貨物搬運</li>
+                                        <li class="mb-2"><i class="fa-solid fa-warehouse text-success me-2"></i> 倉庫貨物整理</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled" style="font-family: var(--font-mono);">
+                                        <li class="mb-2"><i class="fa-solid fa-scissors text-success me-2"></i> 衣物線頭裁減</li>
+                                        <li class="mb-2"><i class="fa-solid fa-shirt text-success me-2"></i> 學校發放校服</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 技能 -->
+        <section class="resume-section" id="skills" data-deco="技">
+            <div class="resume-section-content w-100">
+                <h2 class="section-title">技能 Skills</h2>
+                <div class="subheading mb-4 text-muted">SPECIALIZED CAPABILITIES</div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="skill-item">
+                            <span class="skill-num">01</span>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="skill-name">足球</span>
+                                    <span class="skill-tag">ATHLETIC</span>
+                                </div>
+                                <small class="text-muted">國小校隊訓練資歷</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="skill-item">
+                            <span class="skill-num">02</span>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="skill-name">影片剪輯</span>
+                                    <span class="skill-tag">MEDIA</span>
+                                </div>
+                                <small class="text-muted">Premiere / CapCut</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="skill-item">
+                            <span class="skill-num">03</span>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="skill-name">攝影</span>
+                                    <span class="skill-tag">VISUAL</span>
+                                </div>
+                                <small class="text-muted">社團經驗 / 構圖美學</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 喜愛歌曲 -->
+        <section class="resume-section" id="lovemusic" data-deco="音">
+            <div class="resume-section-content w-100">
+                <h2 class="section-title">音樂收藏 Favorites</h2>
+                <p class="text-muted mb-4" style="font-family: var(--font-mono);">// ACCESSING MUSIC LIBRARY...</p>
+                
+                <div class="gallery-grid">
+                    <!-- 改為正方形 -->
+                    <a href="https://youtu.be/Rwzy6Qt8gq8?si=IKOAWDEuFrEx7bsU" target="_blank" class="d-block"><img src="assets/01.jpg" onerror="this.src='https://dummyimage.com/1600x900/141928/00f3ff.png&text=MUSIC+01'" alt="Music" class="jerrycrop"></a>
+                    <a href="https://youtu.be/ZRtdQ81jPUQ?si=7PCswiRjuEI9fXPl" target="_blank" class="d-block"><img src="assets/02.jpg" onerror="this.src='https://dummyimage.com/1600x900/141928/ff0055.png&text=MUSIC+02'" alt="Music" class="jerrycrop"></a>
+                    <a href="https://youtu.be/oZpYEEcvu5I?si=HkPDW3KIt6FvTYWl" target="_blank" class="d-block"><img src="assets/03.jpg" onerror="this.src='https://dummyimage.com/1600x900/141928/00f3ff.png&text=MUSIC+03'" alt="Music" class="jerrycrop"></a>
+                    <a href="https://youtu.be/kEO59IpN5A4?si=ZHkLkaxEg8m4eYNm" target="_blank" class="d-block"><img src="assets/04.jpg" onerror="this.src='https://dummyimage.com/1600x900/141928/ff0055.png&text=MUSIC+04'" alt="Music" class="jerrycrop"></a>
+                    <a href="https://youtu.be/5GUaMOpfmr8?si=AdBYP9bbbVVFTyIn" target="_blank" class="d-block"><img src="assets/05.jpg" onerror="this.src='https://dummyimage.com/1600x900/141928/00f3ff.png&text=MUSIC+05'" alt="Music" class="jerrycrop"></a>
+                    <a href="https://youtu.be/ony539T074w?si=V9ft7F-VD13lj4dI" target="_blank" class="d-block"><img src="assets/06.jpg" onerror="this.src='https://dummyimage.com/1600x900/141928/ff0055.png&text=MUSIC+06'" alt="Music" class="jerrycrop"></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 即刻聯絡 -->
+        <section class="resume-section" id="contact" data-deco="結">
+            <div class="resume-section-content w-100 text-center">
+                <h2 class="section-title mb-5" style="font-size: 3rem;">即刻聯絡 CONNECT</h2>
+                <h3 class="mb-5" style="color: var(--primary-color); font-family: var(--font-mono); letter-spacing: 3px;">歡迎戳友！ START_LINKING</h3>
+                
+                <div class="social-icons justify-content-center">
+                    <a class="social-icon" href="https://www.facebook.com/profile.php?id=61582985409327" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a class="social-icon" href="https://www.instagram.com/jerrystars._.04.21/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a class="social-icon" href="https://www.threads.net/@jerrystars._.04.21" target="_blank" title="Threads"><i class="fa-solid fa-at"></i></a>
+                    <a class="social-icon" href="mailto:jerrystars888@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+                
+                <div class="mt-5 text-muted" style="font-size: 0.8rem; font-family: var(--font-mono);">
+                    &copy; 2024 JERRY YU. ALL RIGHTS RESERVED. <br> SYSTEM STATUS: ONLINE
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Core theme JS -->
+    <script>
+        window.addEventListener('DOMContentLoaded', event => {
+            // Collapse responsive navbar when toggler is visible
+            const navbarToggler = document.body.querySelector('.navbar-toggler');
+            const responsiveNavItems = [].slice.call(
+                document.querySelectorAll('#navbarResponsive .nav-link')
+            );
+            responsiveNavItems.map(function (responsiveNavItem) {
+                responsiveNavItem.addEventListener('click', () => {
+                    if (window.getComputedStyle(navbarToggler).display !== 'none') {
+                        navbarToggler.click();
+                    }
+                });
+            });
+
+            // Intersection Observer for fade-in animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Optional: Add specific animation class here
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('section').forEach(section => {
+                section.style.opacity = 0;
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
